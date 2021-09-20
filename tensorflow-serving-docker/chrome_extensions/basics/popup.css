@@ -33,6 +33,9 @@ body {
     display: flex;
     justify-content: space-between;
 }
+.row p {
+    margin-right: 0.5rem;
+}
 
 .preview {
     display: flex;

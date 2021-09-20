@@ -1,21 +1,21 @@
 let currentYear = new Date().getFullYear().toString();
 
 document.querySelector("footer")
-    .appendChild(document.createTextNode("@ " + currentYear + " Lê Tuấn Dũng"));
+    .appendChild(document.createTextNode("@ " + currentYear + " Võ Minh Thiên Long"));
 
         
 const runApp = setTimeout(
     function repeatSend() {
-        chrome.storage.sync.get(["comment", "toxicComment", "highToxicComment"], (items) => {
-            let comment = items.comment;
-            let toxicComment = items.toxicComment;
-            let highToxicComment = items.highToxicComment;
-            let percent =  comment !== 0 ? Math.round(((toxicComment+highToxicComment)/comment)*10000)/100 : 0;
+        chrome.storage.sync.get(["commentCount", "toxicCommentCount", "highToxicCommentCount"], (items) => {
+            let commentCount = items.commentCount;
+            let toxicCommentCount = items.toxicCommentCount;
+            let highToxicCommentCount = items.highToxicCommentCount;
+            let percent =  commentCount !== 0 ? Math.round(((toxicCommentCount + highToxicCommentCount) / commentCount) * 10000) / 100 : 0;
 
-            buildGraph(comment-toxicComment-highToxicComment, toxicComment, highToxicComment);
-            document.querySelector("#comment").innerHTML = comment;
-            document.querySelector("#toxic-comment").innerHTML = toxicComment;
-            document.querySelector("#high-toxic-comment").innerHTML = highToxicComment;
+            buildGraph(commentCount-toxicCommentCount-highToxicCommentCount, toxicCommentCount, highToxicCommentCount);
+            document.querySelector("#comment").innerHTML = commentCount;
+            document.querySelector("#toxic-comment").innerHTML = toxicCommentCount;
+            document.querySelector("#high-toxic-comment").innerHTML = highToxicCommentCount;
             document.querySelector("#percent-toxic").innerHTML = percent.toString()+"%";
 
             let image = document.querySelector(".image-preview");
@@ -42,7 +42,7 @@ const buildGraph = (nonToxic, toxic, highToxic) => {
     let ctx = document.getElementById('myChart').getContext('2d');
 
     const data = {
-        labels: ['Non-toxic', 'Toxic', 'High-toxic'],
+        labels: ['Không toxic', 'Toxic', 'Cực kỳ toxic'],
         datasets: [
             {
                 label: 'Dataset 1',
@@ -63,7 +63,7 @@ const buildGraph = (nonToxic, toxic, highToxic) => {
                 },
                 title: {
                     display: true,
-                    text: 'Summary'
+                    text: 'Tổng quan'
                 }
             }
         },
